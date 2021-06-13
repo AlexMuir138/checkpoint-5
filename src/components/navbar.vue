@@ -48,6 +48,7 @@
             class="dropdown-toggle"
             @click="state.dropOpen = !state.dropOpen"
           >
+
             <img
               :src="user.picture"
               alt="user photo"

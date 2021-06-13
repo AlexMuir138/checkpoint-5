@@ -4,10 +4,15 @@
       <div>
         <CreatePost v-if="account.id == $route.params.id" />
       </div>
-
-      <Profile />
-
-      <Thread />
+      <div class="row">
+        <Profile />
+      </div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9">
+          <Thread />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +24,7 @@ import { profileService } from '../services/ProfileService'
 import { useRoute, useRouter } from 'vue-router'
 import { postService } from '../services/PostsService'
 import Notification from '../utils/Notification'
+import { adsService } from '../services/AdsService'
 export default {
   name: 'ProfilePage',
   setup() {
@@ -29,7 +35,8 @@ export default {
     watchEffect(async() => {
       try {
         await profileService.getProfile(route.params.id)
-        await postService.getPosts('api/posts?creatorId=' + route.params.id)
+        await postService.getPosts(route.params.id)
+        await adsService.getAds()
       } catch (error) {
         Notification.toast('this user does not exist', 'warning', 'center')
         router.push({ name: 'Home' })
@@ -37,6 +44,7 @@ export default {
     })
     return {
       state,
+      profile: computed(() => AppState.profile),
       account: computed(() => AppState.account),
       activeProfile: computed(() => AppState.activeProfile)
     }

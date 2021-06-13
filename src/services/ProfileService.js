@@ -8,6 +8,10 @@ class ProfileService {
     logger.log('profile', res.data)
     AppState.activeProfile = res.data
   }
+
+  async editProfile(picture, name) {
+    await api.put('account', { picture, name })
+  }
 }
 
 export const profileService = new ProfileService()

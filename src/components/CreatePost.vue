@@ -41,6 +41,7 @@ export default {
       async createPost() {
         try {
           await postService.createPost(state.newPost)
+          await postService.getPosts()
         } catch (error) {
           Notification.toast(error, 'error')
         }
